@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>猜拳遊戲</title>
+
+  <style>
+    * {
+      font-size: 20px;
+    }
+
+    span {
+      font-size: 30px;
+      cursor: pointer;
+    }
+
+    .container {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .active {
+      background-color: orangered;
+    }
+
+    #action {
+      margin-bottom: 14px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <section>
+    <div class="container">
+      <label for="scissors-btn">
+        <input type="radio" name="game" id="scissors-btn" value="1" hidden>
+        <span class="scissors"> ✌️ </span>
+      </label>
+      <label for="rock-btn">
+        <input type="radio" name="game" id="rock-btn" value="2" hidden>
+        <span class="rock"> ✊ </span>
+      </label>
+      <label for="paper-btn">
+        <input type="radio" name="game" id="paper-btn" value="3" hidden>
+        <span class="paper"> 🖐️ </span>
+      </label>
+    </div>
+
+    <button type="button" id="action"> 確認出拳 </button>
+
+    <div>
+      <b> 👤你出: </b>
+      <span id="user-result"></span>
+    </div>
+
+    <div>
+      <b> 🤖電腦出: </b>
+      <span id="computer-result"></span>
+    </div>
+
+    <div>
+      <b> 🏆結果: </b>
+      <span id="result"></span>
+    </div>
+  </section>
+
+  <script>
+    const action = document.querySelector('#action');
+    const scissorsBtn = document.querySelector('#scissors-btn')
+    const rockBtn = document.querySelector('#rock-btn')
+    const paperBtn = document.querySelector('#paper-btn')
+
+    const scissors = document.querySelector('.scissors');
+    const rock = document.querySelector('.rock');
+    const paper = document.querySelector('.paper');
+
+    scissorsBtn.addEventListener('click', function () {
+      rock.classList.remove('active');
+      paper.classList.remove('active');
+      scissors.classList.add('active');
+    });
+
+    rockBtn.addEventListener('click', function () {
+      scissors.classList.remove('active');
+      paper.classList.remove('active');
+      rock.classList.add('active');
+    });
+
+    paperBtn.addEventListener('click', function () {
+      scissors.classList.remove('active');
+      rock.classList.remove('active');
+      paper.classList.add('active');
+    });
+
+    action.addEventListener('click', function () {
+      const userResult = document.querySelector('#user-result');
+      const game = document.querySelector('input[name="game"]:checked');
+      const userChoice = Number(game.value);
+
+      if (userChoice === 1) {
+        userResult.textContent = '✌️';
+      } else if (userChoice === 2) {
+        userResult.textContent = '✊';
+      } else {
+        userResult.textContent = '🖐️';
+      }
+
+      const computerChoice = Math.floor(Math.random() * 3) + 1;
+      const computerResult = document.querySelector('#computer-result');
+
+      if (computerChoice === 1) {
+        computerResult.textContent = '✌️';
+      } else if (computerChoice === 2) {
+        computerResult.textContent = '✊';
+      } else {
+        computerResult.textContent = '🖐️';
+      }
+
+      const result = document.querySelector('#result');
+
+      // if ((userChoice === 1 && computerChoice === 3) || (userChoice === 2 && computerChoice === 1) || (userChoice === 3 && computerChoice === 2)) {
+      //   result.textContent = '無言ㄟ！你贏了～';
+      // } else if ((userChoice === 1 && computerChoice === 2) || (userChoice === 2 && computerChoice === 3 || (userChoice === 3 && computerChoice === 1))) {
+      //   result.textContent = '哈哈！你輸了～';
+      // } else {
+      //   result.textContent = '平手！有種再來一次～';
+      // }
+
+      if (userChoice === computerChoice) {
+        result.textContent = '平手！有種再來一次～';
+      } else if ((userChoice === 1 && computerChoice === 3) || (userChoice === 2 && computerChoice === 1) || (userChoice === 3 && computerChoice === 2)) {
+        result.textContent = '無言ㄟ！你贏了～';
+      } else {
+        result.textContent = '哈哈！你輸了～';
+      }
+    });
+  </script>
+</body>
+
+</html>
